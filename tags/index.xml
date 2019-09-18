@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags | Academic</title>
-    <link>http://yourgithubusername.github.io/tags/</link>
-      <atom:link href="http://yourgithubusername.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <title>Tags | Ramchandran Muthukumar</title>
+    <link>http://ramcha24.github.io/tags/</link>
+      <atom:link href="http://ramcha24.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <description>Tags</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
     <image>
-      <url>http://yourgithubusername.github.io/img/static/img/profile.jpeg</url>
+      <url>http://ramcha24.github.io/img/static/img/profile.jpeg</url>
       <title>Tags</title>
-      <link>http://yourgithubusername.github.io/tags/</link>
+      <link>http://ramcha24.github.io/tags/</link>
     </image>
     
   </channel>
