@@ -5,12 +5,203 @@
     <link>https://ramcha24.github.io/post/</link>
       <atom:link href="https://ramcha24.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 31 Oct 2019 14:17:42 -0400</lastBuildDate>
     <image>
       <url>https://ramcha24.github.io/img/static/img/profile.jpeg</url>
       <title>Posts</title>
       <link>https://ramcha24.github.io/post/</link>
     </image>
+    
+    <item>
+      <title>Adversarial Robust Generalization requires more data (Schmidt et. al)</title>
+      <link>https://ramcha24.github.io/post/my-first-post/</link>
+      <pubDate>Thu, 31 Oct 2019 14:17:42 -0400</pubDate>
+      <guid>https://ramcha24.github.io/post/my-first-post/</guid>
+      <description>
+
+&lt;p&gt;Trial post to see if I can blog my notes&lt;/p&gt;
+
+&lt;h2 id=&#34;mathematical-setup&#34;&gt;Mathematical Setup&lt;/h2&gt;
+
+&lt;h3 id=&#34;standard-classification-error&#34;&gt;Standard Classification Error&lt;/h3&gt;
+
+&lt;p&gt;Let $\mathcal{P} : \mathbb{R}^d\times {-1,+1} \rightarrow \mathbb{R}$ be the &lt;strong&gt;data distribution&lt;/strong&gt; over input data and output label,  $(x,y)$.
+Let $f:\mathbb{R}^d  \rightarrow {-1,+1}$ be a &lt;strong&gt;classifier&lt;/strong&gt; that maps input data to output label.&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;standard classification error&lt;/strong&gt;, $\beta(f)$ is defined to be,
+$$
+\beta(f) = \mathrm{Pr}_{(x,y) \sim \mathcal{P}} \left[f(x) \neq y \right]
+$$
+Here, $\beta(f)$ is the probability that an input data and output label sampled from $\mathcal{P}$ is misclassified by the classifier $f$.&lt;/p&gt;
+
+&lt;h3 id=&#34;robust-classification-error&#34;&gt;Robust Classification Error&lt;/h3&gt;
+
+&lt;p&gt;Let $\mathcal{P} : \mathbb{R}^d\times {-1,+1} \rightarrow \mathbb{R}$ be the &lt;strong&gt;data distribution&lt;/strong&gt; over input data and output label,  $(x,y)$.
+Let $f:\mathbb{R}^d  \rightarrow {-1,+1}$ be a &lt;strong&gt;classifier&lt;/strong&gt; that maps input data to output label.
+Let $\mathcal{B}:\mathbb{R}^d \times \mathfrak{P}(\mathbb{R}^d)$ be the &lt;strong&gt;perturbation set&lt;/strong&gt; that maps input data to a set of points &lt;em&gt;near&lt;/em&gt; it.&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;$\mathcal{B}$-robust classification error&lt;/strong&gt;, $\beta(f)$ is defined to be,
+$$
+\beta(f) = \mathrm{Pr}_{(x,y) \sim \mathcal{P}} \left[\exists \; x&amp;rsquo; \in \mathcal{B}(x) \text{ such that } f(x&amp;rsquo;) \neq y \right]
+$$&lt;/p&gt;
+
+&lt;p&gt;Here, $\beta(f)$ is the probability that an input data and output label $(x,y)$ sampled from $\mathcal{P}$ is misclassified by the classifier $f$ on any point $x&amp;rsquo;$ near $x$.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Question 1&lt;/strong&gt; :
+If we sample a pair $(x,y) \sim P$ where $y \;|\; x$ is very unlikely, wouldn&amp;rsquo;t this automatically result in a high probability that there exists a $x&amp;rsquo; \in \mathcal{B}(x)$ such that $f(x&amp;rsquo;) \neq y$.
+The current definition of robust error includes the probability of these events.
+Shouldn&amp;rsquo;t we be looking at a different definition of robust classification error? One that will not take such a misclassification into account?
+Perhaps we should weight the probability stronger to bias it towards not penalizing for misclassifying edge cases&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Question 2&lt;/strong&gt; :
+In the gaussian model for data, for all $x$ there is a non-zero probability that the label is $y_1$ or $y_2$.
+so, no matter what $x,y$ we sample and what our classifier $f$ is, there exists $x&amp;rsquo;$ such that $f(x&amp;rsquo;)\neq y$
+What exactly is the probabilty being calculated?
+Is it,&lt;/p&gt;
+
+&lt;p&gt;$$
+\mathrm{Pr}_{(x,y) \sim \mathcal{P}, \; (x&amp;rsquo;,y) \sim P, \; x&amp;rsquo; \in \mathcal{B}(x)} \left[f(x&amp;rsquo;) \neq y \right]  \quad ?
+$$&lt;/p&gt;
+
+&lt;p&gt;We specifically define the set of perturbations w.r.t to the norm $l_{\infty}$ as,
+$$\mathcal{B}^{\epsilon}_{\infty} (x) := \{ x&amp;rsquo; \in \mathbb{R}^d \text{ such that } |x&amp;rsquo;-x|_{\infty} \leq \epsilon \}$$&lt;/p&gt;
+
+&lt;p&gt;We refer to $\mathcal{B}^{\epsilon}_{\infty}$ robustness as simply $l_{\infty}$-robustness.&lt;/p&gt;
+
+&lt;h3 id=&#34;an-example-classifier&#34;&gt;An example classifier&lt;/h3&gt;
+
+&lt;p&gt;For a parameter vector $w$, the &lt;strong&gt;linear classifier&lt;/strong&gt; $f_w : \mathbb{R}\times{-1,+1}$ is defined as
+$$f_w(x):= \text{sign}(\langle w,x\rangle)$$&lt;/p&gt;
+
+&lt;h3 id=&#34;the-gaussian-model-for-data-distribution&#34;&gt;The Gaussian Model for data distribution&lt;/h3&gt;
+
+&lt;p&gt;The model of data $(x,y)$ is two spherical Gaussians with one component per output class.
+Let $\theta^{\star} \in \mathbb{R}^d$ be the per-class mean vector.
+Let $\sigma &amp;gt; 0$ be the variance parameter for each each Gaussian.&lt;/p&gt;
+
+&lt;p&gt;We define the following distributions over data $(x,y) \in \mathbb{R}^d \times {-1,+1}$ to be the $(\theta^{\star},\sigma)-$ Gaussian Model :
+- First, draw a random label $y \in {-1,+1}$ uniformly at random.
+- Sample the data point $x\in \mathbb{R}^d$ according to $\mathcal{N}(y \cdot \theta^{\star},\sigma^2I)$&lt;/p&gt;
+
+&lt;p&gt;i.e. the points that are labelled positive have the distribution $\mathcal{N}(\theta^{\star},\sigma^2I)$.
+and, the points that are labelled negative have the distribution $\mathcal{N}(-\theta^{\star},\sigma^2I)$.&lt;/p&gt;
+
+&lt;p&gt;We want a classifier that separates these two points and has low generalization error (standard and robust)&lt;/p&gt;
+
+&lt;p&gt;We assume here that $|\theta^{\star}|_2 \approx \sqrt{d}$. Therfore, if the variance $\sigma^2$ is  too high then there is more overlap between the two gaussians.&lt;/p&gt;
+
+&lt;h3 id=&#34;theorem-4&#34;&gt;Theorem 4:&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Standard generalizaiton of a Linear classifier under the Guassian Model (with single sample)&lt;/strong&gt;
+Let $(x,y)$ be drawn from a $(\theta^{\star},\sigma)-$Gaussian model where for some constant $c$,
+$$|\theta^{\star}|_2 = \sqrt{d}, \quad \sigma \leq c\cdot d^{\frac{1}{4}}$$&lt;/p&gt;
+
+&lt;p&gt;Choose parameter vector $\hat{w} := y\cdot x$ for the classifier.&lt;/p&gt;
+
+&lt;p&gt;Then with high probability, the linear classifier $f_{\hat{w}}$ has classification error $\leq 1\%$.&lt;/p&gt;
+
+&lt;h3 id=&#34;theorem-5&#34;&gt;Theorem 5:&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Robust error of Linear classifier under the Gaussian Model (under n samples)&lt;/strong&gt;
+Lets draw $n$ samples i.i.d from the $(\theta^{\star},\sigma)-$Gaussian model : $(x_1,y_1),\ldots,(x_n,y_n)$.
+Again the parameters of the guassian model are such that for some constant $c_1$,
+$$|\theta^{\star}|_2 = \sqrt{d}, \quad \sigma \leq c_1\cdot d^{\frac{1}{4}}$$&lt;/p&gt;
+
+&lt;p&gt;Choose for the classifier, the parameter vector $\hat{w} := \frac{1}{n}\sum_{i=1}^n y_ix_i$ which is the class-weighted sample mean.&lt;/p&gt;
+
+&lt;p&gt;Then with high probability the linear classifier $f_{\hat{w}}$ has $l^{\epsilon}_{\infty}$-robust classification error $\leq 1\%$ , &lt;strong&gt;if&lt;/strong&gt;,&lt;br /&gt;
+$$
+n \geq
+\begin{cases}
+1 &amp;amp;\quad \text{ for } \epsilon \leq \frac{1}{4}d^{\frac{-1}{4}}, \\
+c_2 \epsilon^2 \sqrt{d} &amp;amp;\quad \text{ for } \frac{1}{4}d^{\frac{-1}{4}} \leq \epsilon \leq \frac{1}{4}.
+\end{cases}
+$$&lt;/p&gt;
+
+&lt;p&gt;Therefore if the $\epsilon$ is small enough it is possible to learn a $l^{\epsilon}_{\infty}$-robust classification error given large enough number of samples $n$.&lt;/p&gt;
+
+&lt;h3 id=&#34;theorem-6&#34;&gt;Theorem 6:&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Robust error of ANY classifier under the Gaussian Model (under n samples)&lt;/strong&gt;
+Lets draw $n$ samples i.i.d from the $(\theta,\sigma)-$Gaussian model : $(x_1,y_1),\ldots,(x_n,y_n)$.
+Again the parameters of the guassian model are such that for some constant $c_1$,
+$$\theta \sim \mathcal{N}(0,I), \quad \sigma = c_1\cdot d^{\frac{1}{4}}$$&lt;/p&gt;
+
+&lt;p&gt;Let $g_n$ be ANY learning algorithm that gives a binary classifier $f_n$.&lt;/p&gt;
+
+&lt;p&gt;Then, the expected $l^{\epsilon}_{\infty}$-robust classification error of $f_n$ is at least $(1-\frac{1}{d})\frac{1}{2}$ , &lt;strong&gt;if&lt;/strong&gt;
+$$n \leq c_2 \frac{\epsilon^2 \sqrt{d}}{\log(d)}.&lt;br /&gt;
+$$&lt;/p&gt;
+
+&lt;p&gt;Therefore if the sample size is smaller than the quantity given, then the &lt;strong&gt;expected&lt;/strong&gt; robust classification accuracy of &lt;strong&gt;ANY classifier&lt;/strong&gt; is &lt;strong&gt;lower bounded&lt;/strong&gt; by $(1-\frac{1}{d})\frac{1}{2}$.&lt;/p&gt;
+
+&lt;p&gt;To do better than that we necessarily need more samples (that is larger $n$).&lt;/p&gt;
+
+&lt;p&gt;Note : A classifier that predicts either class every time will have robust error of $\frac{1}{2}$. Thus this lower bound is tight in that it says for a small enough $n$, ANY classifier is going to have (&lt;strong&gt;in expectation&lt;/strong&gt;) error in the interval ${\frac{1}{2}-\frac{1}{2d},1}$, while trivial classifier already achieves expected error of $\frac{1}{2}$.
+This lower -bound becomes worse when we are dealing with data of larger dimensions!. This statement also holds for ANY $\epsilon &amp;gt;0$.&lt;/p&gt;
+
+&lt;h3 id=&#34;bernoulli-model&#34;&gt;Bernoulli Model&lt;/h3&gt;
+
+&lt;p&gt;The model of the data $(x,y)$ is defined on the hypercube $\{-1,+1\}^d$ with the two classes being opposite vertices.&lt;/p&gt;
+
+&lt;p&gt;Let $\theta^* \in \{-1,+1\}^d$ be the per-class mean vector.
+Let $\tau &amp;gt; 0$ be the class bias parameter.&lt;/p&gt;
+
+&lt;p&gt;We define the following distributions over data $(x,y) \in \{-1,+1\}^d \times \{-1,+1\}$ to be the $(\theta^{\star},\tau)-$ Bernoulli Model :
+- First, draw a label $y \in \{-1,+1\}$ uniformly at random.
+- Sample the data point $x\in \{-1,+1\}^d$ by sampling each co-ordinate $x_i$ from the distribution,&lt;/p&gt;
+
+&lt;p&gt;$$x_i = \begin{cases}
+y\cdot \theta_i^* &amp;amp;, \quad \text{with probability } \frac{1}{2}+\tau \\
+-y\cdot \theta_i^* &amp;amp;, \quad \text{with probability } \frac{1}{2}-\tau
+\end{cases}
+$$&lt;/p&gt;
+
+&lt;p&gt;Note that, $\mathbb{E}[x_i] = 2\tau \cdot y\cdot \theta^*_i $.&lt;/p&gt;
+
+&lt;p&gt;The points that are labelled positive have the bernoulli distribution with expected value $2\tau \cdot \theta^*$.&lt;/p&gt;
+
+&lt;p&gt;The points that are labelled negative have the bernoulli distribution with expected value $-2\tau \cdot \theta^*$.&lt;/p&gt;
+
+&lt;p&gt;We want a classifier that separates these two points and has low generalization error (standard and robust)&lt;/p&gt;
+
+&lt;p&gt;As before, $\tau$, the bias dictates the amount of overlap between the two classes. If $\tau = \frac{1}{2}$, then zero overlap. If $\tau = 0$, then maximum overlap (no bias).&lt;/p&gt;
+
+&lt;h3 id=&#34;theorem-8&#34;&gt;Theorem 8:&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Standard generalizaiton of a Linear classifier under the Bernoulli Model (with single sample)&lt;/strong&gt;
+Let $(x,y)$ be drawn from a $(\theta^{\star},\tau)$-Bernoulli model where for some constant $c$ such that ,
+$$\tau \geq c\cdot d^{-\frac{1}{4}}$$&lt;/p&gt;
+
+&lt;p&gt;Choose parameter vector $\hat{w} := y\cdot x$ for the classifier.&lt;/p&gt;
+
+&lt;p&gt;Then with high probability, the linear classifier $f_{\hat{w}}$
+has classification error $\leq 1\%$.&lt;/p&gt;
+
+&lt;h3 id=&#34;theorem-9&#34;&gt;Theorem 9:&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Robust error of ANY linear classifier under the Bernoulli Model (under n samples)&lt;/strong&gt;
+Lets draw $n$ samples i.i.d from the $(\theta,\sigma)-$Gaussian model : $(x_1,y_1),\ldots,(x_n,y_n)$.
+Again the parameters of the bernoulli model are such that for some constant $c_1$,
+$$\theta^* \sim \text{Uniform}{-1,+1}^d, \quad \tau = c_1\cdot d^{-\frac{1}{4}}$$&lt;/p&gt;
+
+&lt;p&gt;Let $g_n$ be ANY learning algorithm that gives a linear binary classifier $f_n$.&lt;/p&gt;
+
+&lt;p&gt;Let $\epsilon &amp;lt; 3 \tau$ and $0 \leq \gamma \leq \frac{1}{2}$.&lt;/p&gt;
+
+&lt;p&gt;Then, the expected $l^{\epsilon}_{\infty}$-robust classification error of $f_n$ is at least $\frac{1}{2}-\gamma$ , &lt;strong&gt;if&lt;/strong&gt;
+$$
+n \leq c_2 \frac{\epsilon^2 \gamma^2d}{\log(\frac{d}{\gamma})}.&lt;br /&gt;
+$$&lt;/p&gt;
+
+&lt;p&gt;Therefore if the sample size is smaller than the quantity given, then the &lt;strong&gt;expected&lt;/strong&gt; robust classification accuracy of &lt;strong&gt;ANY classifier&lt;/strong&gt; is &lt;strong&gt;lower bounded&lt;/strong&gt; by $(1-\frac{1}{d})\frac{1}{2}$.&lt;/p&gt;
+
+&lt;p&gt;To do better than that we necessarily need more samples (that is larger $n$).&lt;/p&gt;
+
+&lt;p&gt;Note : A classifier that predicts either class every time will have robust error of $\frac{1}{2}$. Thus this lower bound is tight in that it says for a small enough $n$, ANY classifier is going to have (&lt;strong&gt;in expectation&lt;/strong&gt;) error in the interval ${\frac{1}{2}-\frac{1}{2d},1}$, while trivial classifier already achieves expected error of $\frac{1}{2}$.
+This lower -bound becomes worse when we are dealing with data of larger dimensions!. This statement also holds for ANY $\epsilon &amp;gt;0$.&lt;/p&gt;
+</description>
+    </item>
     
   </channel>
 </rss>
